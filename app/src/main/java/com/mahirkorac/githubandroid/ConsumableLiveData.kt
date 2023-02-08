@@ -10,16 +10,13 @@ class ConsumableLiveData<T>(var consume: Boolean = false) : MutableLiveData<T>()
     private val pending = AtomicBoolean(false)
 
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
-        super.observe(
-            owner,
-            Observer<T> {
-                if (consume) {
-                    if (pending.compareAndSet(true, false)) observer.onChanged(it)
-                } else {
-                    observer.onChanged(it)
-                }
+        super.observe(owner) {
+            if (consume) {
+                if (pending.compareAndSet(true, false)) observer.onChanged(it)
+            } else {
+                observer.onChanged(it)
             }
-        )
+        }
     }
 
     override fun setValue(value: T) {

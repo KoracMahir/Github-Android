@@ -20,11 +20,11 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val query = ConsumableLiveData<String>(true)
-    val queryValue : LiveData<String> = query
+    val queryValue: LiveData<String> = query
     private val sort = ConsumableLiveData<String>(true)
-    val sortValue : LiveData<String> = sort
+    val sortValue: LiveData<String> = sort
     private val order = ConsumableLiveData<String>(true)
-    val orderValue : LiveData<String> = order
+    val orderValue: LiveData<String> = order
 
     private val _repositories = ConsumableLiveData<DataHandler<SearchResponse>>()
     val repositories: LiveData<DataHandler<SearchResponse>> = _repositories
@@ -32,7 +32,7 @@ class SearchViewModel @Inject constructor(
     fun getSearchRepositories() {
         _repositories.postValue(DataHandler.LOADING())
         viewModelScope.launch {
-            if(query.consume) {
+            if (query.consume) {
                 queryValue.value?.let { queryParameter ->
                     val response = repo.getSearchResponse(
                         queryParameter,

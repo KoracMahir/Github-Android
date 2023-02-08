@@ -45,13 +45,13 @@ class FilterBottomSheetFragment(private val viewModel: SearchViewModel) : Bottom
 
     }
 
-    private fun updateFilter(sortType: SortType, orderType: OrderType){
+    private fun updateFilter(sortType: SortType, orderType: OrderType) {
         viewModel.updateFilter(sortType, orderType)
         dismiss()
     }
 
-    private fun selectFilter(textview: TextView, sortType: SortType, orderType: OrderType){
-        if(viewModel.sortValue.value==sortType.value && viewModel.orderValue.value==orderType.value)
+    private fun selectFilter(textview: TextView, sortType: SortType, orderType: OrderType) {
+        if (viewModel.sortValue.value == sortType.value && viewModel.orderValue.value == orderType.value)
             textview.setTextColor(getColor(requireContext(), R.color.black))
         else
             textview.setTextColor(getColor(requireContext(), R.color.grey))

@@ -82,7 +82,7 @@ data class Item(
     val watchers: Int,
     val watchers_count: Int,
     val web_commit_signoff_required: Boolean
-): Parcelable {
+) : Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readByte() != 0.toByte(),
         parcel.readString(),

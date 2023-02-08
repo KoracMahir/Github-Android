@@ -28,7 +28,7 @@ class SearchFragment : Fragment() {
     private val viewModel by viewModels<SearchViewModel>()
     private lateinit var binding: FragmentSearchBinding
     private var searchAdapter: SearchAdapter? = null
-    private var layoutManager : RecyclerView.LayoutManager? = null
+    private var layoutManager: RecyclerView.LayoutManager? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -62,8 +62,9 @@ class SearchFragment : Fragment() {
             }
             binding.repositoryRecycler.adapter = searchAdapter
             searchAdapter?.setOnItemClickListener {
-                findNavController().navigate(SearchFragmentDirections.actionSearchFragmentToRepositoryDetailsFragment
-                    (it))
+                findNavController().navigate(
+                    SearchFragmentDirections.actionSearchFragmentToRepositoryDetailsFragment(it)
+                )
             }
         }
 

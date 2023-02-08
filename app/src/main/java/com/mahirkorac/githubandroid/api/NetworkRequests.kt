@@ -9,8 +9,11 @@ interface NetworkRequests {
 
     @GET("search/repositories?")
     suspend fun getSearchRepositories(@Query("q") query: String): Response<SearchResponse>
+
     @GET("search/repositories?")
-    suspend fun getSearchRepositoriesWithFilter(@Query("q") query: String,
-                                      @Query("sort") sort: String,
-                                      @Query("order") order: String): Response<SearchResponse>
+    suspend fun getSearchRepositoriesWithFilter(
+        @Query("q") query: String,
+        @Query("sort") sort: String,
+        @Query("order") order: String
+    ): Response<SearchResponse>
 }
