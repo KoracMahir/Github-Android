@@ -9,5 +9,18 @@
         android:id="@+id/searchFragment"
         android:name="com.mahirkorac.githubandroid.features.search.SearchFragment"
         android:label="fragment_search"
-        tools:layout="@layout/fragment_search" />
+        tools:layout="@layout/fragment_search" >
+        <action
+            android:id="@+id/action_searchFragment_to_repositoryDetailsFragment"
+            app:destination="@id/repositoryDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/repositoryDetailsFragment"
+        android:name="com.mahirkorac.githubandroid.features.details.RepositoryDetailsFragment"
+        android:label="fragment_repository_details"
+        tools:layout="@layout/fragment_repository_details" >
+        <argument
+            android:name="repositoryDetails"
+            app:argType="com.mahirkorac.githubandroid.features.search.model.Item" />
+    </fragment>
 </navigation>

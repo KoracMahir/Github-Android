@@ -18,22 +18,33 @@ class SearchAdapter(private val repositories: List<Item>) : RecyclerView.Adapter
     override fun getItemCount() = repositories.size
 
     override fun onBindViewHolder(holder: SearchViewHolder, position: Int) {
-        with(holder){
-            with(repositories[position]){
+        with(holder) {
+            with(repositories[position]) {
                 binding.repositoryName.text = this.name
                 Glide.with(holder.itemView.context)
-                    .load(this.owner.avatar_url)
+                    .load(this.owner?.avatar_url)
                     .into(binding.ownerImage)
-                binding.ownerName.text = this.owner.login
+                binding.ownerName.text = this.owner?.login
                 binding.watchersCount.text = "Watchers: ${this.watchers_count}"
                 binding.forksCount.text = "Forks: ${this.forks_count}"
                 binding.issuesCount.text = "Issues: ${this.open_issues_count}"
                 binding.starsCount.text = this.stargazers_count.toString()
                 binding.repoUpdateDate.text = this.updated_at
+
+                binding.root.setOnClickListener {
+                    onItemClickListener?.let {
+                        it(this)
+                    }
+                }
             }
         }
     }
 
     inner class SearchViewHolder(val binding: RepositoryItemBinding) : RecyclerView.ViewHolder(binding.root)
 
+    private var onItemClickListener: ((Item) -> Unit)? = null
+    fun setOnItemClickListener(listener: (Item) -> Unit) {
+        onItemClickListener = listener
+    }
 }
+

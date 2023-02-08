@@ -22,89 +22,87 @@
         android:id="@+id/best_match"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Best match"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/title"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        app:drawableTint="@color/grey"
+        app:drawableStartCompat="@drawable/ic_point" />
     <TextView
         android:id="@+id/most_stars"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Most stars"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/best_match"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        app:drawableTint="@color/grey"
+        app:drawableStartCompat="@drawable/ic_point" />
 
     <TextView
         android:id="@+id/fewest_stars"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Fewest stars"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/most_stars"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        app:drawableTint="@color/grey"
+        app:drawableStartCompat="@drawable/ic_point" />
 
     <TextView
         android:id="@+id/most_forks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Most forks"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/fewest_stars"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        app:drawableStartCompat="@drawable/ic_point"
+        app:drawableTint="@color/grey" />
 
     <TextView
         android:id="@+id/fewest_forks"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Fewest forks"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/most_forks"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        app:drawableStartCompat="@drawable/ic_point"
+        app:drawableTint="@color/grey" />
 
     <TextView
         android:id="@+id/recently_udapted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Recently updated"
         android:textColor="@color/grey"
         app:layout_constraintTop_toBottomOf="@id/fewest_forks"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        app:drawableStartCompat="@drawable/ic_point"
+        app:drawableTint="@color/grey" />
 
     <TextView
         android:id="@+id/least_recently_udapted"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_done"
-        tools:drawableTint="@color/grey"
         android:drawablePadding="20dp"
         android:text="Least recently updated"
         android:textColor="@color/grey"
@@ -113,7 +111,9 @@
         android:layout_marginBottom="30dp"
         android:layout_marginTop="10dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"/>
+        android:layout_marginEnd="20dp"
+        app:drawableTint="@color/grey"
+        app:drawableStartCompat="@drawable/ic_point" />
 
     <ImageView
         android:id="@+id/cancel"

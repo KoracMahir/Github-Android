@@ -1,9 +1,9 @@
 package com.mahirkorac.githubandroid.features.search.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mahirkorac.githubandroid.ConsumableLiveData
 import com.mahirkorac.githubandroid.api.DataHandler
 import com.mahirkorac.githubandroid.features.filter.model.OrderType
 import com.mahirkorac.githubandroid.features.filter.model.SortType
@@ -19,26 +19,28 @@ class SearchViewModel @Inject constructor(
     private val repo: SearchRepository
 ) : ViewModel() {
 
-    private val query = MutableLiveData<String>()
+    private val query = ConsumableLiveData<String>(true)
     val queryValue : LiveData<String> = query
-    private val sort = MutableLiveData<String>()
+    private val sort = ConsumableLiveData<String>(true)
     val sortValue : LiveData<String> = sort
-    private val order = MutableLiveData<String>()
+    private val order = ConsumableLiveData<String>(true)
     val orderValue : LiveData<String> = order
 
-    private val _repositories = MutableLiveData<DataHandler<SearchResponse>>()
+    private val _repositories = ConsumableLiveData<DataHandler<SearchResponse>>()
     val repositories: LiveData<DataHandler<SearchResponse>> = _repositories
 
     fun getSearchRepositories() {
         _repositories.postValue(DataHandler.LOADING())
         viewModelScope.launch {
-            queryValue.value?.let { queryParameter ->
-                val response = repo.getSearchResponse(
-                    queryParameter,
-                    sortValue.value,
-                    orderValue.value
-                )
-                _repositories.postValue(handleResponse(response))
+            if(query.consume) {
+                queryValue.value?.let { queryParameter ->
+                    val response = repo.getSearchResponse(
+                        queryParameter,
+                        sortValue.value,
+                        orderValue.value
+                    )
+                    _repositories.postValue(handleResponse(response))
+                }
             }
         }
     }

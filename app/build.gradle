@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -34,6 +35,13 @@ android {
     }
     buildFeatures {
         viewBinding true
+    }
+    sourceSets {
+        main {
+            kotlin {
+                srcDirs += 'build/generated/source/navigation-args/'
+            }
+        }
     }
 }
 
@@ -69,6 +77,12 @@ dependencies {
 
     kapt "com.github.bumptech.glide:compiler:4.14.2"
     kapt "androidx.lifecycle:lifecycle-compiler:2.5.1"
+
+    //Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
+
+    //rx
+    implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
 
     testImplementation "io.insert-koin:koin-test:3.1.4"
     testImplementation "junit:junit:4.13.2"
