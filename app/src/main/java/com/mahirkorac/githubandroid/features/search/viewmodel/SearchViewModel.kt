@@ -1,15 +1,21 @@
 package com.mahirkorac.githubandroid.features.search.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mahirkorac.githubandroid.ConsumableLiveData
 import com.mahirkorac.githubandroid.api.DataHandler
 import com.mahirkorac.githubandroid.features.filter.model.OrderType
 import com.mahirkorac.githubandroid.features.filter.model.SortType
+import com.mahirkorac.githubandroid.features.search.model.AccessToken
 import com.mahirkorac.githubandroid.features.search.model.SearchResponse
 import com.mahirkorac.githubandroid.features.search.repository.SearchRepository
+import com.mahirkorac.githubandroid.utils.Constants.clientID
+import com.mahirkorac.githubandroid.utils.Constants.clientSecret
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.lang.Exception
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -18,6 +24,9 @@ import retrofit2.Response
 class SearchViewModel @Inject constructor(
     private val repo: SearchRepository
 ) : ViewModel() {
+
+    private val _accessToken = MutableLiveData<AccessToken>()
+    val accessToken: LiveData<AccessToken> = _accessToken
 
     private val query = ConsumableLiveData<String>(true)
     val queryValue: LiveData<String> = query
@@ -65,6 +74,16 @@ class SearchViewModel @Inject constructor(
 
     fun clearSearch() {
         _repositories.postValue(DataHandler.ERROR(message = "Empty search"))
+    }
+
+    fun getAccessToken(code: String) {
+        viewModelScope.launch {
+            try {
+                _accessToken.value = repo.getAccessToken(clientID, clientSecret, code)
+            } catch (e: Exception) {
+                Log.d("TAG", "getAccessToken: error $e")
+            }
+        }
     }
 
 }

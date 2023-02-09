@@ -19,6 +19,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"/>
 
+    <ImageButton
+        android:id="@+id/profile"
+        android:layout_width="@dimen/space_30dp"
+        android:layout_height="@dimen/space_30dp"
+        android:layout_marginEnd="@dimen/space_30dp"
+        android:background="@drawable/ic_profile_logged_in"
+        android:backgroundTint="@color/black"
+        app:layout_constraintTop_toTopOf="@id/search_title"
+        app:layout_constraintBottom_toBottomOf="@id/search_title"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <EditText
         android:id="@+id/search_edit_text"
         android:layout_width="0dp"

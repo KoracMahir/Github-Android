@@ -1,6 +1,7 @@
 package com.mahirkorac.githubandroid.features.search.repository
 
 import com.mahirkorac.githubandroid.api.NetworkRequests
+import com.mahirkorac.githubandroid.features.search.model.AccessToken
 import com.mahirkorac.githubandroid.features.search.model.SearchResponse
 import javax.inject.Inject
 import retrofit2.Response
@@ -15,5 +16,9 @@ class SearchRepositoryImpl @Inject constructor(private val networkRequests: Netw
         } ?: run {
             networkRequests.getSearchRepositories(query)
         }
+    }
+
+    override suspend fun getAccessToken(clientID: String, clientSecret: String, code: String): AccessToken {
+        return networkRequests.getAccessToken(clientID, clientSecret, code)
     }
 }

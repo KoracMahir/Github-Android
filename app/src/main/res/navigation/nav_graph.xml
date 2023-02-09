@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_searchFragment_to_repositoryDetailsFragment"
             app:destination="@id/repositoryDetailsFragment" />
+        <action
+            android:id="@+id/action_searchFragment_to_profileFragment"
+            app:destination="@id/profileFragment" />
     </fragment>
     <fragment
         android:id="@+id/repositoryDetailsFragment"
@@ -23,4 +26,9 @@
             android:name="repositoryDetails"
             app:argType="com.mahirkorac.githubandroid.features.search.model.Item" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.mahirkorac.githubandroid.features.profile.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>
