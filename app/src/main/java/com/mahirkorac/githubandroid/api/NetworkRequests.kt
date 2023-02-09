@@ -16,13 +16,14 @@ import retrofit2.http.Query
 interface NetworkRequests {
 
     @GET("search/repositories?")
-    suspend fun getSearchRepositories(@Query("q") query: String): Response<SearchResponse>
+    suspend fun getSearchRepositories(@Query("q") query: String, @Query("page") page: Int): Response<SearchResponse>
 
     @GET("search/repositories?")
     suspend fun getSearchRepositoriesWithFilter(
         @Query("q") query: String,
         @Query("sort") sort: String,
-        @Query("order") order: String
+        @Query("order") order: String,
+        @Query("page") page: Int
     ): Response<SearchResponse>
 
     @Headers("Accept: application/json")

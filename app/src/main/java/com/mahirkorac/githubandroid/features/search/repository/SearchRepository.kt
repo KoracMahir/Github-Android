@@ -6,6 +6,6 @@ import retrofit2.Response
 
 interface SearchRepository {
 
-    suspend fun getSearchResponse(query: String, filter: String?, order: String?): Response<SearchResponse>
+    suspend fun getSearchResponse(query: String, filter: String?, order: String?, page: Int?): Response<SearchResponse>
     suspend fun getAccessToken(clientID: String, clientSecret: String, code: String): AccessToken
 }

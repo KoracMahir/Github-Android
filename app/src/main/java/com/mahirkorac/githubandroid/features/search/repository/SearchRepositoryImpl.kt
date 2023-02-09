@@ -8,13 +8,14 @@ import retrofit2.Response
 
 class SearchRepositoryImpl @Inject constructor(private val networkRequests: NetworkRequests) : SearchRepository {
 
-    override suspend fun getSearchResponse(query: String, filter: String?, order: String?): Response<SearchResponse> {
+    override suspend fun getSearchResponse(query: String, filter: String?, order: String?, page: Int?):
+            Response<SearchResponse> {
         return filter?.let { filterValue ->
             order?.let { orderValue ->
-                networkRequests.getSearchRepositoriesWithFilter(query, filterValue, orderValue)
+                networkRequests.getSearchRepositoriesWithFilter(query, filterValue, orderValue, page ?:1)
             }
         } ?: run {
-            networkRequests.getSearchRepositories(query)
+            networkRequests.getSearchRepositories(query, page?:1)
         }
     }
 

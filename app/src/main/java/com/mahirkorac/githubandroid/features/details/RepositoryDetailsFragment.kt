@@ -51,6 +51,29 @@ class RepositoryDetailsFragment : Fragment() {
                 Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/${repositoryDetails.owner?.login}"))
             startActivity(browserIntent)
         }
+
+        binding.openBrowserRepo.setOnClickListener {
+            openRepository(
+                repositoryDetails.owner?.login,
+                repositoryDetails.name
+            )
+        }
+        binding.repositoryName.setOnClickListener {
+            openRepository(
+                repositoryDetails.owner?.login,
+                repositoryDetails.name
+            )
+        }
+    }
+
+    private fun openRepository(userLogin: String?, repositoryName: String?) {
+        val browserIntent =
+            Intent(
+                Intent.ACTION_VIEW, Uri.parse(
+                    "https://github.com/${userLogin}/${repositoryName}"
+                )
+            )
+        startActivity(browserIntent)
     }
 
 }

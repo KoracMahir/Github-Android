@@ -34,10 +34,10 @@ class ProfileViewModel @Inject constructor(
     private fun handleResponse(response: Response<UserProfile>): DataHandler<UserProfile> {
         if (response.isSuccessful) {
             response.body()?.let { it ->
-                return DataHandler.SUCCESS(it)
+                return DataHandler.SUCCESS(it,false)
             }
         }
-        return DataHandler.ERROR(message = "Something went wrong")
+        return DataHandler.ERROR(message = "Something went wrong", loading = false)
     }
 
 }

@@ -35,7 +35,9 @@ class FilterBottomSheetFragment(private val viewModel: SearchViewModel) : Bottom
         binding.fewestForks.setOnClickListener { updateFilter(SortType.FORKS, OrderType.ASC) }
         binding.recentlyUdapted.setOnClickListener { updateFilter(SortType.UPDATED, OrderType.DESC) }
         binding.leastRecentlyUdapted.setOnClickListener { updateFilter(SortType.UPDATED, OrderType.ASC) }
+        binding.bestMatch.setOnClickListener { updateFilter(null, null) }
 
+        selectFilter(binding.bestMatch, null, null)
         selectFilter(binding.mostStars, SortType.STARTS, OrderType.DESC)
         selectFilter(binding.fewestStars, SortType.STARTS, OrderType.ASC)
         selectFilter(binding.mostForks, SortType.FORKS, OrderType.DESC)
@@ -45,13 +47,13 @@ class FilterBottomSheetFragment(private val viewModel: SearchViewModel) : Bottom
 
     }
 
-    private fun updateFilter(sortType: SortType, orderType: OrderType) {
+    private fun updateFilter(sortType: SortType?, orderType: OrderType?) {
         viewModel.updateFilter(sortType, orderType)
         dismiss()
     }
 
-    private fun selectFilter(textview: TextView, sortType: SortType, orderType: OrderType) {
-        if (viewModel.sortValue.value == sortType.value && viewModel.orderValue.value == orderType.value)
+    private fun selectFilter(textview: TextView, sortType: SortType?, orderType: OrderType?) {
+        if (viewModel.sortValue.value == sortType?.value && viewModel.orderValue.value == orderType?.value)
             textview.setTextColor(getColor(requireContext(), R.color.black))
         else
             textview.setTextColor(getColor(requireContext(), R.color.grey))

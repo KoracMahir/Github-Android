@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".features.profile.ProfileFragment">
+
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="@dimen/space_30dp"
+        android:layout_height="@dimen/space_30dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@drawable/ic_back"
+        android:layout_margin="@dimen/space_20dp"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/user_data"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/avatar_image"
+            android:layout_width="@dimen/space_100dp"
+            android:layout_height="@dimen/space_100dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/space_20dp"/>
+
+        <TextView
+            android:id="@+id/user_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Name Surname"
+            android:textSize="@dimen/text_size_25sp"
+            app:layout_constraintTop_toBottomOf="@id/avatar_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="@color/black"
+            android:layout_marginTop="@dimen/space_10dp"/>
+
+        <TextView
+            android:id="@+id/following_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Following:1234"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/followers_count"
+            app:layout_constraintTop_toBottomOf="@id/user_login"
+            android:layout_marginTop="@dimen/space_20dp"/>
+
+        <TextView
+            android:id="@+id/followers_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="Followers:1234"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/following_count"
+            app:layout_constraintTop_toBottomOf="@id/user_login"
+            android:layout_marginTop="@dimen/space_20dp"/>
+
+        <TextView
+            android:id="@+id/member_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/member_since"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintTop_toBottomOf="@id/following_count"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/space_10dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/member_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1.1.2001"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintTop_toBottomOf="@id/member_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/space_10dp"/>
+
+        <TextView
+            android:id="@+id/last_interaction_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/last_interaction_at"
+            android:textSize="@dimen/text_size_18sp"
+            app:layout_constraintTop_toBottomOf="@id/member_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/space_10dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/last_interaction_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1.1.2001"
+            android:textSize="@dimen/text_size_14sp"
+            app:layout_constraintTop_toBottomOf="@id/last_interaction_title"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/space_10dp"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/space_40dp"
+        android:minWidth="@dimen/space_40dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

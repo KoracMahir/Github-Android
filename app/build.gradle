@@ -43,6 +43,17 @@ android {
             }
         }
     }
+    flavorDimensions 'default'
+    productFlavors {
+        free {
+            buildConfigField("boolean","CURRENT_PROFILE_VIEW","false")
+            buildConfigField("int","TOTAL_DETAIL_SCREENS","10")
+        }
+        paid {
+            buildConfigField("boolean","CURRENT_PROFILE_VIEW","true")
+            buildConfigField("int","TOTAL_DETAIL_SCREENS","-1")
+        }
+    }
 }
 
 dependencies {

@@ -1,22 +1,22 @@
 package com.mahirkorac.githubandroid.features.search
 
-import android.content.Context
 import android.content.Context.MODE_PRIVATE
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding4.widget.textChanges
+import com.mahirkorac.githubandroid.BuildConfig
 import com.mahirkorac.githubandroid.adapter.SearchAdapter
 import com.mahirkorac.githubandroid.databinding.FragmentSearchBinding
 import com.mahirkorac.githubandroid.features.filter.FilterBottomSheetFragment
@@ -35,12 +35,14 @@ class SearchFragment : Fragment() {
     private lateinit var binding: FragmentSearchBinding
     private var searchAdapter: SearchAdapter? = null
     private var layoutManager: RecyclerView.LayoutManager? = null
+    private var sharedPreferences: SharedPreferences? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentSearchBinding.inflate(layoutInflater)
+        sharedPreferences = context?.getSharedPreferences("MySharedPref", MODE_PRIVATE)
         layoutManager = LinearLayoutManager(context)
         binding.repositoryRecycler.layoutManager = layoutManager
         return binding.root
@@ -53,7 +55,7 @@ class SearchFragment : Fragment() {
             .skipInitialValue()
             .debounce(300, TimeUnit.MILLISECONDS)
             .subscribe {
-                if (viewModel.queryValue.value != it.toString())
+                if (viewModel.queryValue.value != it.toString() && it.toString().isNotEmpty())
                     viewModel.updateQuery(it.toString())
             }
 
@@ -68,10 +70,21 @@ class SearchFragment : Fragment() {
             }
             binding.repositoryRecycler.adapter = searchAdapter
             searchAdapter?.setOnItemClickListener {
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToRepositoryDetailsFragment(it)
-                )
+                if (!freePlanDetailsExceeds())
+                    findNavController().navigate(
+                        SearchFragmentDirections.actionSearchFragmentToRepositoryDetailsFragment(it)
+                    )
+                else
+                    Toast.makeText(
+                        context, "Free trail is over! Please move on paid version of app", Toast
+                            .LENGTH_LONG
+                    ).show()
             }
+        }
+
+        viewModel.clearData.observe(viewLifecycleOwner) {
+            binding.progressBar.isVisible = !it
+            binding.loadMore.isVisible = it
         }
 
         viewModel.queryValue.observe(viewLifecycleOwner) {
@@ -81,6 +94,7 @@ class SearchFragment : Fragment() {
         binding.searchCancel.setOnClickListener {
             binding.searchEditText.text.clear()
             viewModel.clearSearch()
+            viewModel.updateFilter(null, null)
         }
 
         binding.filter.setOnClickListener {
@@ -96,12 +110,27 @@ class SearchFragment : Fragment() {
         }
 
         binding.profile.setOnClickListener {
-            if(getOAuthAccessToken().isNullOrEmpty())
-                processLogin()
-            else
-                findNavController().navigate(
-                    SearchFragmentDirections.actionSearchFragmentToProfileFragment()
-                )
+            if (BuildConfig.FLAVOR == PAID) {
+                if (getOAuthAccessToken().isNullOrEmpty())
+                    processLogin()
+                else
+                    findNavController().navigate(
+                        SearchFragmentDirections.actionSearchFragmentToProfileFragment()
+                    )
+            } else {
+                Toast.makeText(
+                    context, "Free trail is over! Please move on paid version of app", Toast
+                        .LENGTH_LONG
+                ).show()
+            }
+        }
+
+        binding.loadMore.setOnClickListener {
+            viewModel.loadMore()
+        }
+
+        viewModel.page.observe(viewLifecycleOwner) {
+            viewModel.getSearchRepositories()
         }
 
     }
@@ -109,12 +138,12 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val uri: Uri? = activity?.intent?.data
-        if (uri != null){
+        if (uri != null) {
             val code = uri.getQueryParameter("code")
-            if(code != null){
+            if (code != null) {
                 viewModel.getAccessToken(code)
                 Toast.makeText(context, "Login success!", Toast.LENGTH_SHORT).show()
-            } else if((uri.getQueryParameter("error")) != null){
+            } else if ((uri.getQueryParameter("error")) != null) {
                 Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show()
             }
         }
@@ -127,21 +156,38 @@ class SearchFragment : Fragment() {
     private fun processLogin() {
         val intent = Intent(
             Intent.ACTION_VIEW, Uri.parse(
-            "$oauthLoginURL?client_id=$clientID&scope=repo"))
+                "$oauthLoginURL?client_id=$clientID&scope=repo"
+            )
+        )
 
         startActivity(intent)
     }
 
     private fun saveOAuthAccessToken(accessToken: AccessToken) {
-        val sharedPreferences: SharedPreferences? = context?.getSharedPreferences("MySharedPref", MODE_PRIVATE)
         val myEdit = sharedPreferences?.edit()
         myEdit?.putString("accessToken", accessToken.accessToken)
         myEdit?.apply()
     }
 
     private fun getOAuthAccessToken(): String {
-        val sh: SharedPreferences? = context?.getSharedPreferences("MySharedPref", MODE_PRIVATE)
-        return sh?.getString("accessToken", "") ?: ""
+        return sharedPreferences?.getString("accessToken", "") ?: ""
+    }
+
+    private fun freePlanDetailsExceeds(): Boolean {
+        var currentViewCount = sharedPreferences?.getInt("totalDetailPageViews", 0) ?: 0
+        if (BuildConfig.FLAVOR == FREE) {
+            val myEdit = sharedPreferences?.edit()
+            myEdit?.putInt("totalDetailPageViews", ++currentViewCount)
+            myEdit?.apply()
+            if (currentViewCount >= BuildConfig.TOTAL_DETAIL_SCREENS)
+                return true
+        }
+        return false
+    }
+
+    companion object {
+        const val FREE = "free"
+        const val PAID = "paid"
     }
 
 }

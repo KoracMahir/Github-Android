@@ -25,30 +25,38 @@ class SearchViewModel @Inject constructor(
     private val repo: SearchRepository
 ) : ViewModel() {
 
+    private val _clearData = MutableLiveData(true)
+    val clearData: LiveData<Boolean> = _clearData
+
+    private val _page = MutableLiveData(1)
+    val page: LiveData<Int> = _page
+
     private val _accessToken = MutableLiveData<AccessToken>()
     val accessToken: LiveData<AccessToken> = _accessToken
 
-    private val query = ConsumableLiveData<String>(true)
-    val queryValue: LiveData<String> = query
-    private val sort = ConsumableLiveData<String>(true)
-    val sortValue: LiveData<String> = sort
-    private val order = ConsumableLiveData<String>(true)
-    val orderValue: LiveData<String> = order
+    private val query = ConsumableLiveData<String?>(true)
+    val queryValue: LiveData<String?> = query
+    private val sort = ConsumableLiveData<String?>(true)
+    val sortValue: LiveData<String?> = sort
+    private val order = ConsumableLiveData<String?>(true)
+    val orderValue: LiveData<String?> = order
 
     private val _repositories = ConsumableLiveData<DataHandler<SearchResponse>>()
     val repositories: LiveData<DataHandler<SearchResponse>> = _repositories
 
     fun getSearchRepositories() {
-        _repositories.postValue(DataHandler.LOADING())
         viewModelScope.launch {
             if (query.consume) {
                 queryValue.value?.let { queryParameter ->
+                    _clearData.postValue(false)
                     val response = repo.getSearchResponse(
                         queryParameter,
                         sortValue.value,
-                        orderValue.value
+                        orderValue.value,
+                        page.value
                     )
                     _repositories.postValue(handleResponse(response))
+                    _clearData.postValue(true)
                 }
             }
         }
@@ -58,22 +66,29 @@ class SearchViewModel @Inject constructor(
         query.postValue(search)
     }
 
-    fun updateFilter(sortType: SortType, orderType: OrderType) {
-        sort.postValue(sortType.value)
-        order.postValue(orderType.value)
+    fun updateFilter(sortType: SortType?, orderType: OrderType?) {
+        sort.postValue(sortType?.value)
+        order.postValue(orderType?.value)
+    }
+
+    fun loadMore(){
+        var currentPage = page.value ?: 0
+        _page.postValue(++currentPage)
     }
 
     private fun handleResponse(response: Response<SearchResponse>): DataHandler<SearchResponse> {
         if (response.isSuccessful) {
             response.body()?.let { it ->
-                return DataHandler.SUCCESS(it)
+                return DataHandler.SUCCESS(it, false)
             }
         }
-        return DataHandler.ERROR(message = "Something went wrong")
+        return DataHandler.ERROR(message = "Something went wrong", loading = false)
     }
 
     fun clearSearch() {
-        _repositories.postValue(DataHandler.ERROR(message = "Empty search"))
+        _repositories.postValue(DataHandler.ERROR(message = "Empty search", loading = false))
+        query.postValue(null)
+        _clearData.postValue(true)
     }
 
     fun getAccessToken(code: String) {

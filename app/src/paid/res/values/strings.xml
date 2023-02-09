@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">GithubAndroid - PRO</string>
+
+    //filter titles
+    <string name="filter">Filter</string>
+    <string name="best_match">Best match</string>
+    <string name="most_stars">Most stars</string>
+    <string name="fewest_stars">Fewest stars</string>
+    <string name="most_forks">Most forks</string>
+    <string name="fewest_forks">Fewest forks</string>
+    <string name="recently_updated">Recently updated</string>
+    <string name="least_recently_updated">Least recently updated</string>
+    <string name="search">Search</string>
+    <string name="repository_details">Repository details</string>
+    <string name="details">Details:</string>
+    <string name="description">Description:</string>
+    <string name="member_since">Member since:</string>
+    <string name="last_interaction_at">Last interaction at:</string>
+</resources>
