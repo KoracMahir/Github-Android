@@ -1,6 +1,5 @@
 package com.mahirkorac.githubandroid.features.search.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -95,9 +94,7 @@ class SearchViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 _accessToken.value = repo.getAccessToken(clientID, clientSecret, code)
-            } catch (e: Exception) {
-                Log.d("TAG", "getAccessToken: error $e")
-            }
+            } catch (_: Exception) {}
         }
     }
 

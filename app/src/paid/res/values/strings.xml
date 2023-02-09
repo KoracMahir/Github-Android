@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GithubAndroid - PRO</string>
+    <string name="app_name">GithubAndroid</string>
 
     //filter titles
     <string name="filter">Filter</string>
@@ -16,4 +16,5 @@
     <string name="description">Description:</string>
     <string name="member_since">Member since:</string>
     <string name="last_interaction_at">Last interaction at:</string>
+    <string name="load_new">Load new</string>
 </resources>

@@ -139,12 +139,11 @@ class SearchFragment : Fragment() {
         super.onResume()
         val uri: Uri? = activity?.intent?.data
         if (uri != null) {
-            val code = uri.getQueryParameter("code")
-            if (code != null) {
+            uri.getQueryParameter("code")?.let { code ->
                 viewModel.getAccessToken(code)
                 Toast.makeText(context, "Login success!", Toast.LENGTH_SHORT).show()
-            } else if ((uri.getQueryParameter("error")) != null) {
-                Toast.makeText(context, "Something went wrong!", Toast.LENGTH_SHORT).show()
+            } ?: run {
+                Toast.makeText(context, "Could not login, something went wrong!", Toast.LENGTH_SHORT).show()
             }
         }
     }

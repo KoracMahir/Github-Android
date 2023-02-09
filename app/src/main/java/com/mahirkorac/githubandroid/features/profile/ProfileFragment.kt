@@ -11,6 +11,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.mahirkorac.githubandroid.R
 import com.mahirkorac.githubandroid.databinding.FragmentProfileBinding
 import com.mahirkorac.githubandroid.features.profile.viewmodel.ProfileViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -49,7 +50,9 @@ class ProfileFragment : Fragment() {
             binding.progressBar.isVisible = it.loading
         }
 
-        binding.back.setOnClickListener { findNavController().popBackStack() }
+        binding.back.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun getOAuthAccessToken(): String {
