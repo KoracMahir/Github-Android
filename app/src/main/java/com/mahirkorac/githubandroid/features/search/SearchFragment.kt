@@ -80,11 +80,11 @@ class SearchFragment : Fragment() {
                             .LENGTH_LONG
                     ).show()
             }
+            binding.loadMore.isVisible = !it.data?.items.isNullOrEmpty()
         }
 
         viewModel.clearData.observe(viewLifecycleOwner) {
             binding.progressBar.isVisible = !it
-            binding.loadMore.isVisible = it
         }
 
         viewModel.queryValue.observe(viewLifecycleOwner) {
@@ -138,7 +138,7 @@ class SearchFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         val uri: Uri? = activity?.intent?.data
-        if (uri != null) {
+        if (uri != null && viewModel.accessToken.value == null) {
             uri.getQueryParameter("code")?.let { code ->
                 viewModel.getAccessToken(code)
                 Toast.makeText(context, "Login success!", Toast.LENGTH_SHORT).show()

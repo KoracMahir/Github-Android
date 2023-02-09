@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RepositoryDetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentRepositoryDetailsBinding
-    val args: RepositoryDetailsFragmentArgs by navArgs()
+    private val args: RepositoryDetailsFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -30,7 +30,7 @@ class SearchViewModel @Inject constructor(
     private val _page = MutableLiveData(1)
     val page: LiveData<Int> = _page
 
-    private val _accessToken = MutableLiveData<AccessToken>()
+    private val _accessToken = ConsumableLiveData<AccessToken>(true)
     val accessToken: LiveData<AccessToken> = _accessToken
 
     private val query = ConsumableLiveData<String?>(true)
@@ -93,7 +93,7 @@ class SearchViewModel @Inject constructor(
     fun getAccessToken(code: String) {
         viewModelScope.launch {
             try {
-                _accessToken.value = repo.getAccessToken(clientID, clientSecret, code)
+                _accessToken.postValue(repo.getAccessToken(clientID, clientSecret, code))
             } catch (_: Exception) {}
         }
     }
