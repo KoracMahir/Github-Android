@@ -2,7 +2,8 @@ package com.mahirkorac.githubandroid.features.search.model
 
 import android.os.Parcel
 import android.os.Parcelable
-import java.util.ArrayList
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 data class Item(
     val allow_forking: Boolean,
@@ -258,5 +259,11 @@ data class Item(
         }
     }
 
+    fun formattedDate(): String {
+        val newFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd")
+        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+        val date = LocalDate.parse(updated_at, formatter)
+        return date.format(newFormatter)
+    }
 
 }

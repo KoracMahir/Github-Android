@@ -41,10 +41,10 @@ class ProfileFragment : Fragment() {
                     .load(currentUser?.avatar_url)
                     .into(binding.avatarImage)
                 binding.userLogin.text = currentUser?.login
-                binding.followersCount.text = currentUser?.followers.toString()
-                binding.followingCount.text = currentUser?.following.toString()
-                binding.memberDate.text = currentUser?.created_at
-                binding.lastInteractionDate.text = currentUser?.updated_at
+                binding.followersCount.text = "Followers: ${currentUser?.followers}"
+                binding.followingCount.text = "Following: ${currentUser?.following}"
+                binding.memberDate.text = viewModel.getFormattedDate(currentUser?.created_at ?: "")
+                binding.lastInteractionDate.text = viewModel.getFormattedDate(currentUser?.updated_at ?: "")
             }
             binding.userData.isVisible = !it.loading
             binding.progressBar.isVisible = it.loading

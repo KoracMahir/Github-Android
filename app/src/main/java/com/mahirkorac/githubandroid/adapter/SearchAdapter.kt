@@ -29,7 +29,7 @@ class SearchAdapter(private val repositories: List<Item>) : RecyclerView.Adapter
                 binding.forksCount.text = "Forks: ${this.forks_count}"
                 binding.issuesCount.text = "Issues: ${this.open_issues_count}"
                 binding.starsCount.text = this.stargazers_count.toString()
-                binding.repoUpdateDate.text = this.updated_at
+                binding.repoUpdateDate.text = this.formattedDate()
 
                 binding.root.setOnClickListener {
                     onItemClickListener?.let {

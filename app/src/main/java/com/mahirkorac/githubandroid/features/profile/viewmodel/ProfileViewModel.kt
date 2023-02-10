@@ -7,8 +7,9 @@ import com.mahirkorac.githubandroid.ConsumableLiveData
 import com.mahirkorac.githubandroid.api.DataHandler
 import com.mahirkorac.githubandroid.features.profile.model.UserProfile
 import com.mahirkorac.githubandroid.features.profile.repository.ProfileRepository
-import com.mahirkorac.githubandroid.features.search.model.SearchResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import javax.inject.Inject
 import kotlinx.coroutines.launch
 import retrofit2.Response
@@ -38,6 +39,15 @@ class ProfileViewModel @Inject constructor(
             }
         }
         return DataHandler.ERROR(message = "Something went wrong", loading = false)
+    }
+
+    fun getFormattedDate(dateString: String): String {
+        return if(dateString.isNotEmpty()) {
+            val newFormatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd")
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            val date = LocalDate.parse(dateString, formatter)
+            date.format(newFormatter)
+        } else dateString
     }
 
 }
