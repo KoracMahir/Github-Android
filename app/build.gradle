@@ -94,6 +94,10 @@ dependencies {
 
     //rx
     implementation 'com.jakewharton.rxbinding4:rxbinding:4.0.0'
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.2'
+
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
+    testImplementation "org.mockito:mockito-core:5.1.1"
 
     testImplementation "io.insert-koin:koin-test:3.1.4"
     testImplementation "junit:junit:4.13.2"
